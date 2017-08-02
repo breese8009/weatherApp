@@ -59,15 +59,9 @@ function createHtml(data,tem,win,hum){
    let temp = document.querySelector('.tempData');
    let wind = document.querySelector('.windData');
    let himidity = document.querySelector('.humidityData');
-   
-
-   for(let i=0 ; i<data.length; i++){
-date.innerHTML +=data[i]+"</br>";
-   }
- 
 
  temp.innerHTML = tem + " F";
- // date.innerHTML = data;
+ date.innerHTML = data;
  wind.innerHTML = win + " mph";
  himidity.innerHTML = hum + "%";
 

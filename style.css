@@ -1,0 +1,24 @@
+
+.weatherTable{
+	padding-right:50px;
+	text-align:center;
+	background-color: black;
+	color:white;
+	font-size: 21px;
+	opacity:0.75;
+}
+
+.dataRow{
+	text-align:center;
+	background-color: gray;
+	opacity:0.75;
+}
+.txt{
+	font-size: 34px;
+	color:black;
+
+}
+
+body{
+	background-image: url("https://wallpaperlayer.com/img/2015/7/scenery-hd-6386-6662-hd-wallpapers.jpg");
+}

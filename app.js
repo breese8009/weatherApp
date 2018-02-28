@@ -1,70 +1,60 @@
 $(document).ready(function(){
+let c = 0
+let apiKey = '&APPID=ec282729eb8135acaf3a928950b49948'
+let forcast = "http://api.openweathermap.org/data/2.5/weather?lat="
 
-	let zip;
-	let windSpeed;
-	let temp;
-	let apiKey = '&APPID=ec282729eb8135acaf3a928950b49948';
-	let forcast = "http://api.openweathermap.org/data/2.5/forecast?zip="
-	
 
-// get ip info and weather info, nested with weather AJAX JSON function
+$('button').on('click', function(){
+
+	$('#displayWeather').removeClass('hid')
+
 $.getJSON("https://ipinfo.io/", function( data ) {
-	zip=data.postal;
 
-	$.getJSON(forcast+zip+',us'+apiKey, function( weather ) {
-		let weatherArr = weather.list;
+		let lat = data.loc.split`,`[0]
+		let long = data.loc.split`,`[1]
 
-		console.log(weatherArr);
+$.getJSON(forcast + lat + '&lon=' + long + apiKey, function( weather ) {
+		
+		let tempature = Math.floor(fahrenheit(weather.main.temp - 273.15))
+		let city = weather.name;
+		let weatherIcon = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`
+		let description = weather.weather[0].description.split` `.map(x => x.slice(0,1).toUpperCase()+x.slice(1).toLowerCase()).join` `
+		let highs = Math.floor(fahrenheit(weather.main.temp_max - 273.15))
+		let lows = Math.floor(fahrenheit(weather.main.temp_min - 273.15))
 
-		weatherArr.forEach((el)=>{	
-
-createHtml(tansformDates(el.dt_txt), fahrenheit(Math.floor(el.main.temp-273.15)), el.wind.speed, el.main.humidity);
-		});
+	if(c<1){
+	  c++
+	  renderWeatherData(city, tempature, weatherIcon, description, highs, lows)
+	} 
 	});
+
+  });
 
 });
 
 
 
-
-
 // cel-273.15, convert to fahrenheit
-let fahrenheit= (cel)=>{
+function fahrenheit(cel){
 	return (cel*9)/5+32;
 }
 
-//transform to relative date
-function tansformDates(str){
-	let arr=str.split`-`;
-	let yearMonth = arr.slice(0,2);
-	let day = arr.pop().slice(0,2);
-	return yearMonth[1]+"/"+day+"/"+yearMonth[0];
-}
 
-//transform to relative hour time
-function transformTime(str){
-	let temp = str.split`-`.slice(2,3);
-	let time = temp.join``.split` `.pop();
-	let hour = time.split(':')[0];
-	if(hour==='24' || hour==='00') return 12;
-	else
-		return hour<=12 ? parseInt(hour) : hour%12;
-}
+function renderWeatherData(city,temp,icon,desc,high,low){
+	
+	let html = `
+		<div id="dataDiv">
+	
+   			<h1 class="dataHeader">Weather for ${city}, CA.</h1>
+   			<img class="dataImg" src=${icon} />
+   			<h3 class="dataHeader">${desc}</h3>
+   			<h3 class="dataItems">Current tempature: ${temp} F</h3>
+   			<h3 class="dataItems">Highs: ${high} F</h3>
+   			<h3 class="dataItems">Lows: ${low} F</h3>
+    	</div>
+	`
 
-
-
-
-function createHtml(data,tem,win,hum){
-   let date = document.querySelector('.dateData');
-   let temp = document.querySelector('.tempData');
-   let wind = document.querySelector('.windData');
-   let himidity = document.querySelector('.humidityData');
-
- temp.innerHTML = tem + " F";
- date.innerHTML = data;
- wind.innerHTML = win + " mph";
- himidity.innerHTML = hum + "%";
-
+	$('#displayWeather').prepend(html)
 
 }
 

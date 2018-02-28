@@ -1,24 +1,53 @@
-
-.weatherTable{
-	padding-right:50px;
-	text-align:center;
-	background-color: black;
-	color:white;
-	font-size: 21px;
-	opacity:0.75;
-}
-
-.dataRow{
-	text-align:center;
-	background-color: gray;
-	opacity:0.75;
-}
-.txt{
-	font-size: 34px;
-	color:black;
-
-}
-
 body{
+
 	background-image: url("https://wallpaperlayer.com/img/2015/7/scenery-hd-6386-6662-hd-wallpapers.jpg");
 }
+
+#displayWeather{
+	height:350px;
+	width:550px;
+	margin:auto;
+	margin-top:100px;
+
+}
+
+.hid{
+
+	display:none;
+}
+
+.dataHeader{
+
+	text-align:center;
+}
+
+.dataImg{
+
+	height:70px;
+	float:right;
+	margin-top:0px;
+}
+
+#dataDiv{
+
+	background-color: white;
+	opacity:0.75;
+	height:300px;
+
+}
+
+#origDisplay{
+	text-align: center;
+	margin:auto;
+}
+
+button{
+	background-color: orange;
+	color:white;
+	height:30px;
+	width:130px;
+	font-weight:bold;
+	border:2px solid blue;
+}
+
+
